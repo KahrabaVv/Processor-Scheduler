@@ -35,9 +35,9 @@ java -jar os-process-scheduler.jar
 - David Ayman - [GitHub](https://github.com/X3nonC0der) | [LinkedIn](https://www.linkedin.com/in/david-ayman/)
 - Kerolos Sameh - [GitHub](https://github.com/KahrabaVv) | [LinkedIn](https://www.linkedin.com/in/kerolos--sameh/)
 - Mark Emad - [GitHub](https://github.com/Markadies) 
-- Nada Amin
+- Nada Amin - [GitHub](https://github.com/Nada-Amin)
 - Kerolos George
-- Mikeae
+- Mikhail Sobhy - [GitHub](https://github.com/MikhailSobhy)
 
 ## Acknowledgements
 * [JavaFX](https://gluonhq.com/products/javafx/)
