@@ -1,5 +1,9 @@
 package com.asu.scheduler.model.process;
 
+import java.awt.*;
+
+import javafx.scene.paint.Color;
+
 public class Process {
 
     public enum ProcessState {
@@ -15,6 +19,8 @@ public class Process {
     int completionTime;
     public int remainingTime;
     int responseTime;
+
+    public Color color;
 
     public ProcessState state;
 

@@ -1,6 +1,6 @@
 # Processor Scheduler
 [![Java 17](https://img.shields.io/badge/Java-17-green.svg)](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
-[![JavaFX](https://img.shields.io/badge/JavaFX-17-red.svg)](https://gluonhq.com/products/javafx/)
+[![JavaFX](https://img.shields.io/badge/JavaFX-19.0.2.1-red.svg)](https://gluonhq.com/products/javafx/)
 [![Generic badge](https://img.shields.io/badge/License-MIT-blue.svg)](https://shields.io/)
 
 This is a processor scheduler that simulates the following scheduling algorithms:
@@ -10,21 +10,19 @@ This is a processor scheduler that simulates the following scheduling algorithms
 * Priority
 * Round Robin (RR)
 
-It is written in Java 17 and JavaFX 17 is used for the GUI.
+It is written in Java 17 and JavaFX 19.0.2.1 is used for the GUI.
 
 ## GUI
-The GUI is built using JavaFX Scene Builder 17.
+The GUI is built using JavaFX.
 
 ## Installation
 ```bash
 git clone
-cd os-process-scheduler
-mvn clean install
+cd processor-scheduler
 ```
 ## Usage
 ```bash
-cd target
-java -jar os-process-scheduler.jar
+mvn clean javafx:run
 ```
 
 ### Dependencies
@@ -40,10 +38,8 @@ java -jar os-process-scheduler.jar
 - Mikhail Sobhy - [GitHub](https://github.com/MikhailSobhy)
 
 ## Acknowledgements
-* [JavaFX](https://gluonhq.com/products/javafx/)
 * [Java 17](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
-* [JavaFX 17](https://gluonhq.com/products/javafx/)
-* [JavaFX Scene Builder](https://gluonhq.com/products/scene-builder/)
+* [JavaFX 19](https://gluonhq.com/products/javafx/)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
