@@ -1,30 +1,30 @@
 /*Priority-P, Priority-NP*/
 package com.nada.sb_test;
 
-import javafx.collections.FXCollections;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.IntegerBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import javafx.util.converter.NumberStringConverter;
 
 
 public class PriorityController implements Initializable{
 
+    @FXML
+    private Button AddButton;
 
     @FXML
     private Text AT_label;
@@ -48,60 +48,70 @@ public class PriorityController implements Initializable{
     private Text priority_label;
 
     @FXML
-    private static TableView<Process> table;
-//    @FXML
-//    private TableColumn<Process, Integer> Process;
+    private TableView<Process> table;
 
     @FXML
-    private TableColumn<Process, Integer> arrivalTime;
+    private TableColumn<Process, Integer> arrivalTimeColumn;
 
     @FXML
-    private TableColumn<Process, Integer> burstTime;
+    private TableColumn<Process, Integer> burstTimeColumn;
 
     @FXML
-    private TableColumn<Process, Integer> priority;
-//    ObservableList<Process> list= FXCollections.observableArrayList(
-//            new Process(0,5,4),
-//            new Process(1,6,3),
-//            new Process(2,7,4),
-//            new Process(2,7,4),
-//            new Process(2,7,4)
-//    );
+    private TableColumn<Process, Integer> priorityColumn;
+
+    @FXML
+    private TableColumn<Process, String> PIDColumn;
+
+    @FXML
+    private TableColumn<Process, Integer> remainingTimeColumn;
+
+    @FXML
+    private Button PreviousButton;
+    String fxmlFileName = "";
+
+//    private int pidCounter = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Process.setCellValueFactory(new PropertyValueFactory<Process,Integer>("pid"));
-        arrivalTime.setCellValueFactory(new PropertyValueFactory<Process, Integer>("arrivalTime"));
-        burstTime.setCellValueFactory(new PropertyValueFactory<Process, Integer>("burstTime"));
-        priority.setCellValueFactory(new PropertyValueFactory<Process, Integer>("priority"));
-//        processes = FXCollections.observableArrayList();
-//        table.setItems(list);
+        PIDColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("pid"));
+
+        arrivalTimeColumn.setCellValueFactory(new PropertyValueFactory<Process, Integer>("arrivalTime"));
+        burstTimeColumn.setCellValueFactory(new PropertyValueFactory<Process, Integer>("burstTime"));
+        priorityColumn.setCellValueFactory(new PropertyValueFactory<Process, Integer>("priority"));
+        remainingTimeColumn.setCellValueFactory(new PropertyValueFactory<Process, Integer>("remainingTime"));
+        Process.pidCounter=1;
     }
     @FXML
     void Add(ActionEvent event){
-        Process process= new Process(
+        Process process = new Process(
                 Integer.parseInt(Arrival_Time.getText()),
                 Integer.parseInt(Burst_Time.getText()),
                 Integer.parseInt(priority_field.getText()));
+
+        //pidCounter++;
+        ObservableList<Process> currentTableData = table.getItems();
+        currentTableData.add(process);
+        table.setItems(currentTableData);
+//        System.out.println(Process.pidString);
+
         Arrival_Time.clear();
         Burst_Time.clear();
         priority_field.clear();
-        processes= table.getItems();
-        processes.add(process);
-        table.setItems(processes);
 
+    }
+    @FXML
+    private void PrevScene(ActionEvent event) throws IOException {
+        fxmlFileName = "AlgoScene.fxml";
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFileName));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        Stage stage = (Stage) PreviousButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    void Solve(ActionEvent event) throws IOException {
+    void Solve(ActionEvent event) {
 
     }
 
-
-    @FXML
-    private void handleSceneSelection(ActionEvent event) throws IOException {
-
-    }
-
-    private ObservableList<Process> processes=FXCollections.observableArrayList();
 }

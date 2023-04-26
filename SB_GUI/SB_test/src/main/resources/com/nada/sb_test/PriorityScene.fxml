@@ -31,7 +31,7 @@
                         <Font size="14.0" />
                     </font>
                 </Text>
-                <Button layoutX="171.0" layoutY="232.0" mnemonicParsing="false" onAction="#Add" prefHeight="30.0" prefWidth="149.0" text="Add">
+                <Button fx:id="AddButton" layoutX="171.0" layoutY="232.0" mnemonicParsing="false" onAction="#Add" prefHeight="30.0" prefWidth="149.0" text="Add">
                     <font>
                         <Font size="13.0" />
                     </font>
@@ -43,12 +43,19 @@
                 <Font size="14.0" />
             </font>
         </Button>
-      <TableView fx:id="table" layoutX="350.0" layoutY="87.0" onSort="#Add" prefHeight="326.0" prefWidth="342.0">
+      <TableView fx:id="table" layoutX="350.0" layoutY="87.0" prefHeight="326.0" prefWidth="342.0">
          <columns>
-            <TableColumn fx:id="arrivalTime" minWidth="0.0" prefWidth="82.4000244140625" text="arrivalTime" />
-            <TableColumn fx:id="burstTime" prefWidth="92.79989624023438" text="burstTime" />
-            <TableColumn fx:id="priority" prefWidth="90.4000244140625" text="priority" />
+            <TableColumn fx:id="PIDColumn" prefWidth="39.199951171875" text="pid" />
+            <TableColumn fx:id="arrivalTimeColumn" minWidth="0.0" prefWidth="79.20001220703125" text="arrivalTime" />
+            <TableColumn fx:id="burstTimeColumn" prefWidth="71.19992065429688" text="burstTime" />
+            <TableColumn fx:id="priorityColumn" prefWidth="53.60003662109375" text="priority" />
+            <TableColumn fx:id="remainingTimeColumn" prefWidth="99.20001220703125" text="remainingTime" />
          </columns>
       </TableView>
+      <Button fx:id="PreviousButton" layoutX="19.0" layoutY="455.0" mnemonicParsing="false" onAction="#PrevScene" prefHeight="30.0" prefWidth="138.0" text="Previous">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

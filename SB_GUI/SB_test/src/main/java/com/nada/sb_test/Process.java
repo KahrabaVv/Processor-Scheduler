@@ -8,7 +8,7 @@ public class Process {
         READY, RUNNING, TERMINATED
     }
 
-    int pid;
+    static int pid;
     int arrivalTime;
     int burstTime;
     int priority;
@@ -21,7 +21,7 @@ public class Process {
     public Color color;
 
     public ProcessState state;
-
+    String pidString;
     public static int pidCounter = 1;
 
     // Constructor
@@ -34,12 +34,13 @@ public class Process {
     }
 
     public Process(int arrivalTime, int burstTime, int priority) {
-//        this.pid = pidCounter++;
+        this.pid = pidCounter++;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priority = priority;
-//        this.remainingTime = burstTime;
+        this.remainingTime = burstTime;
     }
+
 
     // Getters and Setters
     public int getArrivalTime() {
@@ -50,7 +51,7 @@ public class Process {
         return burstTime;
     }
 
-    public int getPID() {
+    public static int getPid() {
         return pid;
     }
 
@@ -126,12 +127,12 @@ public class Process {
         this.state = state;
     }
 
-    public static void setPidCounter(int pidCounter) {
-        Process.pidCounter = pidCounter;
-    }
+//    public static void setPidCounter(int pidCounter) {
+//        Process.pidCounter = pidCounter;
+//    }
 
     @Override
     public String toString() {
-        return "P(" + pid + ") " + "AT: " + arrivalTime + " BT: " + burstTime + " RT: " + remainingTime;
+        return "p" + pid;
     }
 }

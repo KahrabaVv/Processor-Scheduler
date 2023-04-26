@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -22,6 +23,11 @@ public class AlgoController implements Initializable {
     @FXML
     private javafx.scene.control.ComboBox<String> comboBox;
 
+    @FXML
+    private Button NextButton;
+
+    String fxmlFileName = "";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -31,10 +37,10 @@ public class AlgoController implements Initializable {
     @FXML
     private void handleSceneSelection(ActionEvent event) throws IOException {
         String selectedScene = comboBox.getValue();
-        String fxmlFileName = "";
+
 
         if (selectedScene.equals("Round Robin")) {
-            fxmlFileName = "RR_Scene.fxml";
+            fxmlFileName = "RRScene.fxml";
         }
         else if(selectedScene.equals("Priority-NP")||selectedScene.equals("Priority-P")){
             fxmlFileName = "PriorityScene.fxml";
@@ -43,6 +49,11 @@ public class AlgoController implements Initializable {
             fxmlFileName = "ParentScene.fxml";
         }
 
+
+    }
+
+    @FXML
+    private void NextScene(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFileName));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         Stage stage = (Stage) comboBox.getScene().getWindow();
