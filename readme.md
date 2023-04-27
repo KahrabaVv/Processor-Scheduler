@@ -1,6 +1,6 @@
 # Processor Scheduler
 [![Java 17](https://img.shields.io/badge/Java-17-green.svg)](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
-[![JavaFX](https://img.shields.io/badge/JavaFX-19.0.2.1-red.svg)](https://gluonhq.com/products/javafx/)
+[![JavaFX](https://img.shields.io/badge/JavaFX-17.0.1-red.svg)](https://gluonhq.com/products/javafx/)
 [![Generic badge](https://img.shields.io/badge/License-MIT-blue.svg)](https://shields.io/)
 
 This is a processor scheduler that simulates the following scheduling algorithms:
