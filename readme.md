@@ -10,7 +10,7 @@ This is a processor scheduler that simulates the following scheduling algorithms
 * Priority
 * Round Robin (RR)
 
-It is written in Java 17 and JavaFX 19.0.2.1 is used for the GUI.
+It is written in Java 17 and JavaFX 17.0.1 is used for the GUI.
 
 ## GUI
 The GUI is built using JavaFX.
@@ -39,7 +39,7 @@ mvn clean javafx:run
 
 ## Acknowledgements
 * [Java 17](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
-* [JavaFX 19](https://gluonhq.com/products/javafx/)
+* [JavaFX 17](https://gluonhq.com/products/javafx/)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

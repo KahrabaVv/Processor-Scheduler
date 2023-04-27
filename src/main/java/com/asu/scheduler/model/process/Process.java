@@ -1,6 +1,7 @@
 package com.asu.scheduler.model.process;
 
-import java.awt.*;
+
+//import java.awt.*;
 
 import javafx.scene.paint.Color;
 
@@ -52,7 +53,7 @@ public class Process {
         return burstTime;
     }
 
-    public int getPID() {
+    public int getPid() {
         return pid;
     }
 
@@ -82,6 +83,54 @@ public class Process {
 
     public ProcessState getState() {
         return state;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
+
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public void setBurstTime(int burstTime) {
+        this.burstTime = burstTime;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
+    }
+
+    public void setTurnAroundTime(int turnAroundTime) {
+        this.turnAroundTime = turnAroundTime;
+    }
+
+    public void setCompletionTime(int completionTime) {
+        this.completionTime = completionTime;
+    }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public void setResponseTime(int responseTime) {
+        this.responseTime = responseTime;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setState(ProcessState state) {
+        this.state = state;
+    }
+
+    public static void setPidCounter(int pidCounter) {
+        Process.pidCounter = pidCounter;
     }
 
     @Override
