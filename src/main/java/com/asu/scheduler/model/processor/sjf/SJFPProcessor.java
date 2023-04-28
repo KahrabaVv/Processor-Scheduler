@@ -29,6 +29,7 @@ public class SJFPProcessor extends Processor {
                 }
             }
             if (currentProcess != null && shortestProcess.getRemainingTime() >= currentProcess.getRemainingTime()) {
+                super.increaseWaitingTime();
                 return;
             } else if (currentProcess != null) {
                 currentProcess.state = Process.ProcessState.READY;
@@ -38,6 +39,7 @@ public class SJFPProcessor extends Processor {
             currentProcess.state = Process.ProcessState.RUNNING;
             readyProcesses.remove(shortestProcess);
         } else if (currentProcess != null) {
+            super.increaseWaitingTime();
             return;
         }
 

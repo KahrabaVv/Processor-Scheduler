@@ -18,6 +18,7 @@ public class SJFNPProcessor extends Processor {
                 terminatedProcesses.add(currentProcess);
                 currentProcess = null;
             } else {
+                super.increaseWaitingTime();
                 return;
             }
         }

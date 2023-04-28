@@ -30,6 +30,7 @@ public class PriorityPProcessor extends Processor {
                 }
             }
             if (currentProcess != null && highestPriorityProcess.getPriority() >= currentProcess.getPriority()) {
+                super.increaseWaitingTime();
                 return;
             } else if (currentProcess != null) {
                 currentProcess.state = Process.ProcessState.READY;
@@ -39,6 +40,7 @@ public class PriorityPProcessor extends Processor {
             currentProcess.state = Process.ProcessState.RUNNING;
             readyProcesses.remove(highestPriorityProcess);
         } else if (currentProcess != null) {
+            super.increaseWaitingTime();
             return;
         }
 

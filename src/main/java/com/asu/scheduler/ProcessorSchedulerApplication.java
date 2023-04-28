@@ -128,8 +128,8 @@ public class ProcessorSchedulerApplication extends Application {
         root.getChildren().add(outsideVBox);
 
         int currentTime = 0;
-        int avgWaitingTime = 0;
-        int avgTurnaroundTime = 0;
+        float avgWaitingTime = 0;
+        float avgTurnaroundTime = 0;
         System.out.println("Gannt Chart Processes: " + ganttChartProcesses);
         for (Process process : ganttChartProcesses) {
             // Create the rectangle for the process and add it to the chart pane and having

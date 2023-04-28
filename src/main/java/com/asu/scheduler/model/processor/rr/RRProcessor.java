@@ -29,6 +29,7 @@ public class RRProcessor extends Processor {
                 currentProcess = null;
                 counter = 0;
             } else {
+                super.increaseWaitingTime();
                 return;
             }
         } else {
