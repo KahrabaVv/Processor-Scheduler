@@ -1,11 +1,14 @@
 /*FCFS, SJF-P, SJF-NP*/
 package com.asu.scheduler.model.controller;
 
+import com.asu.scheduler.model.GlobalStopWatch;
 import com.asu.scheduler.model.process.Process;
 import com.asu.scheduler.ProcessorSchedulerApplication;
 import com.asu.scheduler.model.processor.Processor;
 import com.asu.scheduler.model.processor.fcfs.FCFSProcessor;
 
+import com.asu.scheduler.model.processor.priority.PriorityNPProcessor;
+import com.asu.scheduler.model.processor.priority.PriorityPProcessor;
 import com.asu.scheduler.model.processor.rr.RRProcessor;
 import com.asu.scheduler.model.processor.sjf.SJFNPProcessor;
 import com.asu.scheduler.model.processor.sjf.SJFPProcessor;
@@ -84,22 +87,35 @@ public class ParentCtrl implements Initializable {
     }
     @FXML
     void Add(ActionEvent event){
+        if (Arrival_Time.getText() == null || Arrival_Time.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Arrival Time is Empty");
+            alert.setContentText("Please enter a valid Arrival Time");
+            alert.showAndWait();
+            return;
+        }
+
+        if (Burst_Time.getText() == null || Burst_Time.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Burst Time is Empty");
+            alert.setContentText("Please enter a valid Burst Time");
+            alert.showAndWait();
+            return;
+        }
+
         Process process = new Process(
                 Integer.parseInt(Arrival_Time.getText()),
                 Integer.parseInt(Burst_Time.getText())
                 );
 
-        //pidCounter++;
-//        ObservableList<Process> currentTableData = table.getItems();
         processes= table.getItems();
         addProcess(process);
         table.setItems(processes);
-//        System.out.println(Process.pidString);
 
         Arrival_Time.clear();
         Burst_Time.clear();
-
-
     }
 
     @FXML
@@ -114,66 +130,37 @@ public class ParentCtrl implements Initializable {
         else if (AlgoCtrl.selectedScene.equals("SJF-P")){
             initProcessor(new SJFPProcessor());
         }
+        else if (AlgoCtrl.selectedScene.equals("Priority-NP")){
+            initProcessor(new PriorityNPProcessor());
+        }
+        else if (AlgoCtrl.selectedScene.equals("Priority-P")){
+            initProcessor(new PriorityPProcessor());
+        }
         else if(AlgoCtrl.selectedScene.equals("Round Robin")){
             initProcessor(new RRProcessor(RR_Ctrl.quantum));
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No Algorithm Selected");
+            alert.setContentText("Please select an algorithm");
+            alert.showAndWait();
+            return;
         }
-
-        // Add test data according to the processor type
-//        addTempData();
-
-//        StringBuilder ganntChart = new StringBuilder();
-//        ganntChart
-//                .append("Gannt Chart for ")
-//                .append(processor.getProcessorType())
-//                .append(" Processor:\n");
 
         // Simulate the application
-        while (true) {
-            // Add new processes to the processor
-            populateProcesses();
-
-            // Run the processor
-            processor.execute();
-
-            // Increment the global time
-            com.asu.scheduler.model.GlobalStopWatch.incrementTime();
-
-            if (processes.size() == 0 && processor.state == Processor.ProcessorState.IDLE) {
-                // System.out.println(ganntChart.toString());
-                // System.out.println("\nAll processes have been terminated");
-                break;
-                // System.exit(0);
-            } else {
-                // ganntChart.append(processor.getCurrentProcess() == null ? "I" : "P(" + processor.getCurrentProcess().getPID() + ") ");
-                if (processor.getCurrentProcess().color == null) {
-                    processor.getCurrentProcess().color = Color.rgb(
-                            (int) (Math.random() * 256),
-                            (int) (Math.random() * 256),
-                            (int) (Math.random() * 256)
-                    );
-                }
-
-                ganttChartProcesses.add(processor.getCurrentProcess());
-            }
-        }
-
-        // Debugging
-        // for (Process process : ganttChartProcesses) {
-        //     System.out.print(process.getPID() + " -> ");
-        // }
+        simulate();
 
         // Initialize the Gantt Chart Scene
         initGanttChartScene();
         Stage stage = (Stage) Solve_Button.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-
     }
     @FXML
     private void PrevScene(ActionEvent event) throws IOException {
         fxmlFileName = "AlgoScene.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(ProcessorSchedulerApplication.class.getResource(fxmlFileName));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 400, 150);
         Stage stage = (Stage) PreviousButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();

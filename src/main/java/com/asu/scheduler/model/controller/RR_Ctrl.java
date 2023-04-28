@@ -50,7 +50,7 @@ public class RR_Ctrl implements Initializable {
     private void PrevScene(ActionEvent event) throws IOException {
         fxmlFileName = "AlgoScene.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(ProcessorSchedulerApplication.class.getResource(fxmlFileName));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 400, 150);
         Stage stage = (Stage) PreviousButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
@@ -60,7 +60,7 @@ public class RR_Ctrl implements Initializable {
         quantum=Integer.parseInt(quantum_field.getText());
         fxmlFileName = "ParentScene.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(ProcessorSchedulerApplication.class.getResource(fxmlFileName));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 770, 425);
         Stage stage = (Stage) NextButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();

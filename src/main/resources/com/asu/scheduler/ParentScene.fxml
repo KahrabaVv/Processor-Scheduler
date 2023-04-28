@@ -11,44 +11,45 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #2D2D2D; -fx-border-color: #FF0043; -fx-region-border: #FF0043; -fx-border-style: #FF0043;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asu.scheduler.model.controller.ParentCtrl">
     <children>
-        <Pane layoutX="19.0" layoutY="49.0" prefHeight="333.0" prefWidth="342.0">
+        <Pane layoutX="19.0" layoutY="25.0" prefHeight="333.0" prefWidth="342.0">
             <children>
-                <TextField fx:id="Arrival_Time" layoutX="7.0" layoutY="80.0" promptText="0" />
-                <Text fx:id="AT_label" fill="WHITE" layoutX="8.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrival Times">
+                <TextField fx:id="Arrival_Time" layoutX="7.0" layoutY="25.0" promptText="0" />
+                <Text fx:id="AT_label" fill="WHITE" layoutX="8.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrival Time">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Text>
-                <TextField fx:id="Burst_Time" layoutX="7.0" layoutY="167.0" promptText="5" />
-                <Text fx:id="BT_label" fill="#fcfbfb" layoutX="8.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Burst Times">
+                <TextField fx:id="Burst_Time" layoutX="170.0" layoutY="25.0" promptText="5" />
+                <Text fx:id="BT_label" fill="#fcfbfb" layoutX="170.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Burst Time">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Text>
-                <Button fx:id="AddButton" layoutX="171.0" layoutY="232.0" mnemonicParsing="false" onAction="#Add" prefHeight="30.0" prefWidth="149.0" text="Add">
+                <Button fx:id="AddButton" layoutX="170.0" layoutY="55.0" mnemonicParsing="false" onAction="#Add" prefHeight="30.0" prefWidth="149.0" text="Add Process">
                     <font>
                         <Font size="13.0" />
                     </font>
                 </Button>
             </children>
         </Pane>
-        <Button fx:id="Solve_Button" layoutX="537.0" layoutY="455.0" mnemonicParsing="false" onAction="#Solve" prefHeight="30.0" prefWidth="138.0" text="Solve">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
-        <TableView fx:id="table" layoutX="350.0" layoutY="87.0" prefHeight="326.0" prefWidth="342.0">
+
+        <TableView fx:id="table" layoutX="350.0" layoutY="25.0" prefHeight="326.0" prefWidth="400.0">
             <columns>
-                <TableColumn fx:id="PIDColumn" prefWidth="65.59991455078125" text="pid" />
-                <TableColumn fx:id="arrivalTimeColumn" minWidth="0.0" prefWidth="85.60009765625" text="arrivalTime" />
-                <TableColumn fx:id="burstTimeColumn" prefWidth="87.19998168945312" text="burstTime" />
-                <TableColumn fx:id="remainingTimeColumn" prefWidth="108.0" text="remainingTime" />
+                <TableColumn fx:id="PIDColumn" prefWidth="70" text="PID" />
+                <TableColumn fx:id="arrivalTimeColumn" minWidth="0.0" prefWidth="85" text="Arrival Time" />
+                <TableColumn fx:id="burstTimeColumn" prefWidth="90" text="Burst Time" />
+                <TableColumn fx:id="remainingTimeColumn" prefWidth="150" text="Remaining Time" />
             </columns>
         </TableView>
-      <Button fx:id="PreviousButton" layoutX="19.0" layoutY="455.0" mnemonicParsing="false" onAction="#PrevScene" prefHeight="30.0" prefWidth="138.0" text="Previous">
+      <Button fx:id="PreviousButton" layoutX="20.0" layoutY="375.0" mnemonicParsing="false" onAction="#PrevScene" prefHeight="30.0" prefWidth="138.0" text="Previous">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
+        <Button fx:id="Solve_Button" layoutX="615.0" layoutY="375.0" mnemonicParsing="false" onAction="#Solve" prefHeight="30.0" prefWidth="138.0" text="Solve">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

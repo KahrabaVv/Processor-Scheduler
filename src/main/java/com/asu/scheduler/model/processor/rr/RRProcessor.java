@@ -17,10 +17,9 @@ public class RRProcessor extends Processor {
     public void execute() {
         // Algorithm for Round Robin
         if (currentProcess != null) {
-            currentProcess.remainingTime--;
+            currentProcess.decrementRemainingTime();
             counter++;
-            if (currentProcess.remainingTime == 0) {
-                currentProcess.state = Process.ProcessState.TERMINATED;
+            if (currentProcess.getRemainingTime() == 0) {
                 terminatedProcesses.add(currentProcess);
                 currentProcess = null;
                 counter = 0;
@@ -43,5 +42,7 @@ public class RRProcessor extends Processor {
         }
 
         state = currentProcess == null ? ProcessorState.IDLE : ProcessorState.BUSY;
+
+        super.increaseWaitingTime();
     }
 }

@@ -4,19 +4,18 @@ import com.asu.scheduler.model.processor.Processor;
 import com.asu.scheduler.model.process.Process;
 
 
-public class PriorityProcessor extends Processor {
+public class PriorityPProcessor extends Processor {
 
-    public PriorityProcessor() {
-        super(ProcessorType.PRIORITY);
+    public PriorityPProcessor() {
+        super(ProcessorType.PRIORITY_P);
     }
 
     @Override
     public void execute() {
         // TODO: Implement Priority Processor
         if (currentProcess != null) {
-            currentProcess.remainingTime--;
-            if (currentProcess.remainingTime == 0) {
-                currentProcess.state = Process.ProcessState.TERMINATED;
+            currentProcess.decrementRemainingTime();
+            if (currentProcess.getRemainingTime() == 0) {
                 terminatedProcesses.add(currentProcess);
                 currentProcess = null;
             }
@@ -44,5 +43,7 @@ public class PriorityProcessor extends Processor {
         }
 
         state = currentProcess == null ? ProcessorState.IDLE : ProcessorState.BUSY;
+
+        super.increaseWaitingTime();
     }
 }

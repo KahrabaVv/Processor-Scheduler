@@ -12,11 +12,9 @@ public class SJFPProcessor extends Processor {
     @Override
     public void execute() {
         // Algorithm for SJF with Preemption (Preemptive Shortest Job First)
-
         if (currentProcess != null) {
-            currentProcess.remainingTime--;
-            if (currentProcess.remainingTime == 0) {
-                currentProcess.state = Process.ProcessState.TERMINATED;
+            currentProcess.decrementRemainingTime();
+            if (currentProcess.getRemainingTime() == 0) {
                 terminatedProcesses.add(currentProcess);
                 currentProcess = null;
             }
@@ -26,11 +24,11 @@ public class SJFPProcessor extends Processor {
         if (readyProcesses.size() > 0) {
             shortestProcess = readyProcesses.get(0);
             for (Process process : readyProcesses) {
-                if (process.remainingTime < shortestProcess.remainingTime) {
+                if (process.getRemainingTime() < shortestProcess.getRemainingTime()) {
                     shortestProcess = process;
                 }
             }
-            if (currentProcess != null && shortestProcess.remainingTime >= currentProcess.remainingTime) {
+            if (currentProcess != null && shortestProcess.getRemainingTime() >= currentProcess.getRemainingTime()) {
                 return;
             } else if (currentProcess != null) {
                 currentProcess.state = Process.ProcessState.READY;
@@ -45,5 +43,6 @@ public class SJFPProcessor extends Processor {
 
         state = currentProcess == null ? ProcessorState.IDLE : ProcessorState.BUSY;
 
+        super.increaseWaitingTime();
     }
 }

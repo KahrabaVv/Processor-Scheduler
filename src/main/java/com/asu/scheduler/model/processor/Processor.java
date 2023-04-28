@@ -8,7 +8,9 @@ public abstract class Processor {
     // Enumerations
     public enum ProcessorState { IDLE, BUSY }
 
-    public enum ProcessorType { FCFS, SJF_P, SJF_NP, RR, PRIORITY }
+    public enum ProcessorType {
+        FCFS, SJF_P, SJF_NP, RR, PRIORITY_P, PRIORITY_NP
+    }
 
     // Constructor
     protected Processor(ProcessorType processorType) {
@@ -46,5 +48,11 @@ public abstract class Processor {
 
     public void setProcessorType(ProcessorType processorType) {
         this.processorType = processorType;
+    }
+
+    public void increaseWaitingTime() {
+        for (Process process : readyProcesses) {
+            process.incrementWaitingTime();
+        }
     }
 }

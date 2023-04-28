@@ -13,9 +13,8 @@ public class SJFNPProcessor extends Processor {
     public void execute() {
         // Algorithm for SJF without Preemption
         if (currentProcess != null) {
-            currentProcess.remainingTime--;
-            if (currentProcess.remainingTime == 0) {
-                currentProcess.state = Process.ProcessState.TERMINATED;
+            currentProcess.decrementRemainingTime();
+            if (currentProcess.getRemainingTime() == 0) {
                 terminatedProcesses.add(currentProcess);
                 currentProcess = null;
             } else {
@@ -27,7 +26,7 @@ public class SJFNPProcessor extends Processor {
         if (readyProcesses.size() > 0) {
             shortestProcess = readyProcesses.get(0);
             for (Process process : readyProcesses) {
-                if (process.remainingTime < shortestProcess.remainingTime) {
+                if (process.getRemainingTime() < shortestProcess.getRemainingTime()) {
                     shortestProcess = process;
                 }
             }
@@ -37,5 +36,7 @@ public class SJFNPProcessor extends Processor {
         }
 
         state = currentProcess == null ? ProcessorState.IDLE : ProcessorState.BUSY;
+
+        super.increaseWaitingTime();
     }
 }

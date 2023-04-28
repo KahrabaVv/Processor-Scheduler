@@ -12,10 +12,9 @@ public class FCFSProcessor extends Processor {
     @Override
     public void execute() {
         if (currentProcess != null) {
-            currentProcess.remainingTime--;
+            currentProcess.decrementRemainingTime();
 
-            if (currentProcess.remainingTime == 0) {
-                currentProcess.state = Process.ProcessState.TERMINATED;
+            if (currentProcess.getRemainingTime() == 0) {
                 terminatedProcesses.add(currentProcess);
                 currentProcess = null;
 
@@ -32,5 +31,7 @@ public class FCFSProcessor extends Processor {
             }
         }
         state = currentProcess == null ? ProcessorState.IDLE : ProcessorState.BUSY;
+
+        super.increaseWaitingTime();
     }
 }

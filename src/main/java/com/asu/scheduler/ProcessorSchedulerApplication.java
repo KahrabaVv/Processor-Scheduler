@@ -38,81 +38,57 @@ public class ProcessorSchedulerApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        // Set the title of the stage
-        // stage.setTitle("Process Scheduler");
-        //
-        //// Select the scene to show
-        // stage.setScene(scenes[2]);
-        //
-        //// Show the stage
-        // stage.show();
-
         FXMLLoader fxmlLoader = new FXMLLoader(ProcessorSchedulerApplication.class.getResource("AlgoScene.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 730, 500);
-        // try to make image doesn't depend on path
-        Image icon = new Image("D:\\scheduler\\src\\main\\java\\com\\asu\\scheduler\\cpu_icon.png");
-        stage.getIcons().add(icon);
+        Scene scene = new Scene(fxmlLoader.load(), 400, 150);
+
+        // Set the title of the stage
         stage.setTitle("Process Scheduler");
+
+        // Set the icon of the stage
+        stage.getIcons().add(new Image("cpu_icon.png"));
+
+        // Select the scene to show
         stage.setScene(scene);
+
+        // Show the stage
         stage.show();
     }
 
     public static void main(String[] args) {
-
-        // Change the processor type here
-        // initProcessor(new PriorityProcessor());
-        //
-        // // Add test data according to the processor type
-        // addTempData();
-        //
-        //// StringBuilder ganntChart = new StringBuilder();
-        //// ganntChart
-        //// .append("Gannt Chart for ")
-        //// .append(processor.getProcessorType())
-        //// .append(" Processor:\n");
-        //
-        // // Simulate the application
-        // while (true) {
-        // // Add new processes to the processor
-        // populateProcesses();
-        //
-        // // Run the processor
-        // processor.execute();
-        //
-        // // Increment the global time
-        // GlobalStopWatch.incrementTime();
-        //
-        // if (processes.size() == 0 && processor.state ==
-        // Processor.ProcessorState.IDLE) {
-        // // System.out.println(ganntChart.toString());
-        // // System.out.println("\nAll processes have been terminated");
-        // break;
-        // // System.exit(0);
-        // } else {
-        // // ganntChart.append(processor.getCurrentProcess() == null ? "I" : "P(" +
-        // processor.getCurrentProcess().getPID() + ") ");
-        // if (processor.getCurrentProcess().color == null) {
-        // processor.getCurrentProcess().color = Color.rgb(
-        // (int) (Math.random() * 256),
-        // (int) (Math.random() * 256),
-        // (int) (Math.random() * 256)
-        // );
-        // }
-        //
-        // ganttChartProcesses.add(processor.getCurrentProcess());
-        // }
-        // }
-        //
-        // // Debugging
-        // // for (Process process : ganttChartProcesses) {
-        // // System.out.print(process.getPID() + " -> ");
-        // // }
-        //
-        // // Initialize the Gantt Chart Scene
-        // initGanttChartScene();
-
         // Launch the JavaFX Application
         launch(args);
+    }
+
+    /**
+     * Simulate
+     */
+    public static void simulate() {
+        System.out.println("Simulating...");
+        System.out.println("Processes: " + processes);
+        while (true) {
+            // Add new processes to the processor
+            populateProcesses();
+
+            // Run the processor
+            processor.execute();
+
+            // Increment the global time
+            GlobalStopWatch.incrementTime();
+
+            if (processes.size() == 0 && processor.state == Processor.ProcessorState.IDLE && processor.readyProcesses.size() == 0) {
+                break;
+            } else {
+                if (processor.getCurrentProcess() != null && processor.getCurrentProcess().color == null) {
+                    processor.getCurrentProcess().color = Color.rgb(
+                            (int) (Math.random() * 256),
+                            (int) (Math.random() * 256),
+                            (int) (Math.random() * 256)
+                    );
+                }
+
+                ProcessorSchedulerApplication.ganttChartProcesses.add(processor.getCurrentProcess());
+            }
+        }
     }
 
     /**
@@ -132,30 +108,42 @@ public class ProcessorSchedulerApplication extends Application {
         root.setAlignment(Pos.CENTER);
 
         // Create the scene and show the stage
-        scene = new Scene(root, 800, 150);
+        scene = new Scene(root, 900, 150);
 
         // Add ScrollPane
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(chartPane);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
-        scrollPane.setPrefViewportWidth(800);
+        scrollPane.setPrefViewportWidth(650);
         scrollPane.setPrefViewportHeight(150);
         root.getChildren().add(scrollPane);
 
+        // Add outside VBox Avg Waiting Time and Avg Turnaround Time
+        VBox outsideVBox = new VBox();
+        outsideVBox.setSpacing(10);
+        outsideVBox.setPadding(new Insets(10));
+        outsideVBox.setAlignment(Pos.CENTER);
+        outsideVBox.setPrefWidth(250);
+        root.getChildren().add(outsideVBox);
+
         int currentTime = 0;
+        int avgWaitingTime = 0;
+        int avgTurnaroundTime = 0;
+        System.out.println("Gannt Chart Processes: " + ganttChartProcesses);
         for (Process process : ganttChartProcesses) {
             // Create the rectangle for the process and add it to the chart pane and having
             // the label
             Rectangle processRect = new Rectangle(80, 15);
 
-            processRect.setFill(Objects.requireNonNullElseGet(process.color,
-                    () -> Color.color(
-                            Math.random(),
-                            Math.random(),
-                            Math.random())));
+            if (process != null) {
+                processRect.setFill(process.color);
+            } else {
+                processRect.setFill(Color.GRAY);
+            }
 
-            Label processLabel = new Label("P" + process.getPid());
+
+            Label processLabel = new Label(process != null ? "P" + process.getPid() : "IDLE");
             processLabel.setPrefWidth(50);
             processLabel.setAlignment(Pos.CENTER);
 
@@ -171,10 +159,26 @@ public class ProcessorSchedulerApplication extends Application {
             // Increment the current time
             currentTime += 1;
         }
+
+        avgWaitingTime = processor.terminatedProcesses.stream().mapToInt(Process::getWaitingTime).sum();
+        avgTurnaroundTime = processor.terminatedProcesses.stream().mapToInt(Process::getTurnAroundTime).sum();
+
+        avgWaitingTime /= processor.terminatedProcesses.size() != 0 ? processor.terminatedProcesses.size() : 1;
+        avgTurnaroundTime /= processor.terminatedProcesses.size() != 0 ? processor.terminatedProcesses.size() : 1;
+
+
+
+        // Add Avg Waiting Time
+        Label avgWaitingTimeLabel = new Label("Average Waiting Time: " + avgWaitingTime);
+        outsideVBox.getChildren().add(avgWaitingTimeLabel);
+
+        // Add Avg Turnaround Time
+        Label avgTurnaroundTimeLabel = new Label("Average Turnaround Time: " + avgTurnaroundTime);
+        outsideVBox.getChildren().add(avgTurnaroundTimeLabel);
     }
 
     /**
-     * Add temporary data to the list of processes
+     * Add temporary data to the list of processes (Debugging)
      */
     public static void addTempData() {
         // Priority Test Data

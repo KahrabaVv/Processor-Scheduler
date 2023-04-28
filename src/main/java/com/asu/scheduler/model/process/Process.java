@@ -1,8 +1,6 @@
 package com.asu.scheduler.model.process;
 
-
-//import java.awt.*;
-
+import com.asu.scheduler.model.GlobalStopWatch;
 import javafx.scene.paint.Color;
 
 public class Process {
@@ -11,24 +9,42 @@ public class Process {
         READY, RUNNING, TERMINATED
     }
 
-    int pid;
-    int arrivalTime;
-    int burstTime;
-    int priority;
-    int waitingTime;
-    int turnAroundTime;
-    int completionTime;
-    public int remainingTime;
-    int responseTime;
+    // Static variable to keep track of the number of processes
+    public static int pidCounter = 1;
 
+    // Process ID
+    int pid;
+
+    // Arrival time of the process
+    int arrivalTime;
+
+    // Burst time of the process
+    int burstTime;
+
+    // Priority of the process
+    int priority;
+
+    // Waiting time of the process
+    int waitingTime;
+
+    // Turn around time of the process
+    int turnAroundTime;
+
+    // Remaining time of the process
+    int remainingTime;
+
+    // Finish time is the time when the process is terminated
+    int finishTime;
+
+    // Color of the process in the Gantt Chart
     public Color color;
+
+    // State of the process
 
     public ProcessState state;
 
-    public static int pidCounter = 1;
 
-    // Constructor
-
+    // Constructors
     public Process(int arrivalTime, int burstTime) {
         this.pid = pidCounter++;
         this.arrivalTime = arrivalTime;
@@ -61,6 +77,25 @@ public class Process {
         return priority;
     }
 
+    public void decrementRemainingTime() {
+        remainingTime--;
+
+        if (remainingTime == 0) {
+            state = ProcessState.TERMINATED;
+        }
+
+        finishTime = GlobalStopWatch.getTime();
+        turnAroundTime = finishTime - arrivalTime;
+    }
+
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void incrementWaitingTime() {
+        waitingTime++;
+    }
+
     public int getWaitingTime() {
         return waitingTime;
     }
@@ -69,72 +104,8 @@ public class Process {
         return turnAroundTime;
     }
 
-    public int getCompletionTime() {
-        return completionTime;
-    }
-
-    public int getRemainingTime() {
-        return remainingTime;
-    }
-
-    public int getResponseTime() {
-        return responseTime;
-    }
-
-    public ProcessState getState() {
-        return state;
-    }
-
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
-
-    public void setArrivalTime(int arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-
-    public void setBurstTime(int burstTime) {
-        this.burstTime = burstTime;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public void setWaitingTime(int waitingTime) {
-        this.waitingTime = waitingTime;
-    }
-
-    public void setTurnAroundTime(int turnAroundTime) {
-        this.turnAroundTime = turnAroundTime;
-    }
-
-    public void setCompletionTime(int completionTime) {
-        this.completionTime = completionTime;
-    }
-
-    public void setRemainingTime(int remainingTime) {
-        this.remainingTime = remainingTime;
-    }
-
-    public void setResponseTime(int responseTime) {
-        this.responseTime = responseTime;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public void setState(ProcessState state) {
-        this.state = state;
-    }
-
-    public static void setPidCounter(int pidCounter) {
-        Process.pidCounter = pidCounter;
-    }
-
     @Override
     public String toString() {
-        return "P(" + pid + ") " + "AT: " + arrivalTime + " BT: " + burstTime + " RT: " + remainingTime;
+        return "P(" + pid + ") " + "AT: " + arrivalTime + " BT: " + burstTime + " RT: " + remainingTime + " WT: " + waitingTime + " TT: " + turnAroundTime + " FT: " + finishTime;
     }
 }

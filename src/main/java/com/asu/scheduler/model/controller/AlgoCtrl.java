@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,6 +31,8 @@ public class AlgoCtrl implements Initializable {
     String fxmlFileName = "";
     public static String selectedScene;
 
+    protected int defaultWidth = 400, defaultHeight = 150;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -40,9 +43,12 @@ public class AlgoCtrl implements Initializable {
     private void handleSceneSelection(ActionEvent event) throws IOException {
         selectedScene = comboBox.getValue();
 
-
+        defaultWidth = 770;
+        defaultHeight = 425;
         if (selectedScene.equals("Round Robin")) {
             fxmlFileName = "RRScene.fxml";
+            defaultWidth = 700;
+            defaultHeight = 150;
         }
         else if(selectedScene.equals("Priority-NP")||selectedScene.equals("Priority-P")){
             fxmlFileName = "PriorityScene.fxml";
@@ -56,8 +62,19 @@ public class AlgoCtrl implements Initializable {
 
     @FXML
     private void NextScene(ActionEvent event) throws IOException {
+        // Check if the user selected a scene
+        if (fxmlFileName.equals("")) {
+            // Show Message Alert Dialog
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No Algorithm Selected");
+            alert.setContentText("Please select an algorithm to continue");
+            alert.showAndWait();
+            return;
+        }
+
         FXMLLoader fxmlLoader = new FXMLLoader(ProcessorSchedulerApplication.class.getResource(fxmlFileName));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        Scene scene = new Scene(fxmlLoader.load(), defaultWidth, defaultHeight);
         Stage stage = (Stage) comboBox.getScene().getWindow();
         stage.setScene(scene);
         stage.show();

@@ -3,7 +3,7 @@ package com.asu.scheduler.model.controller;
 
 import com.asu.scheduler.ProcessorSchedulerApplication;
 import com.asu.scheduler.model.processor.Processor;
-import com.asu.scheduler.model.processor.priority.PriorityProcessor;
+import com.asu.scheduler.model.processor.priority.PriorityPProcessor;
 import com.asu.scheduler.model.process.Process;
 
 import javafx.event.ActionEvent;
@@ -75,7 +75,6 @@ public class PriorityCtrl implements Initializable{
     private Button PreviousButton;
     String fxmlFileName = "";
 
-//    private int pidCounter = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,29 +88,47 @@ public class PriorityCtrl implements Initializable{
     }
     @FXML
     void Add(ActionEvent event){
+
+        if (Arrival_Time.getText() == null || Arrival_Time.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Arrival Time is Empty");
+            alert.showAndWait();
+            return;
+        }
+        else if (Burst_Time.getText() == null || Burst_Time.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Burst Time is Empty");
+            alert.showAndWait();
+            return;
+        }
+        else if (priority_field.getText() == null || priority_field.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Priority is Empty");
+            alert.showAndWait();
+            return;
+        }
+
         Process process = new Process(
                 Integer.parseInt(Arrival_Time.getText()),
                 Integer.parseInt(Burst_Time.getText()),
                 Integer.parseInt(priority_field.getText()));
 
-        //pidCounter++;
-//        ObservableList<Process> currentTableData = table.getItems();
-
         processes= table.getItems();
         addProcess(process);
         table.setItems(processes);
-//        System.out.println(Process.pidString);
 
         Arrival_Time.clear();
         Burst_Time.clear();
         priority_field.clear();
-
     }
     @FXML
     private void PrevScene(ActionEvent event) throws IOException {
         fxmlFileName = "AlgoScene.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(ProcessorSchedulerApplication.class.getResource(fxmlFileName));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 450, 150);
         Stage stage = (Stage) PreviousButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
@@ -120,51 +137,10 @@ public class PriorityCtrl implements Initializable{
     @FXML
     void Solve(ActionEvent event) {
         // Change the processor type here
-        initProcessor(new PriorityProcessor());
-
-        // Add test data according to the processor type
-//        addTempData();
-
-//        StringBuilder ganntChart = new StringBuilder();
-//        ganntChart
-//                .append("Gannt Chart for ")
-//                .append(processor.getProcessorType())
-//                .append(" Processor:\n");
+        initProcessor(new PriorityPProcessor());
 
         // Simulate the application
-        while (true) {
-            // Add new processes to the processor
-            populateProcesses();
-
-            // Run the processor
-            processor.execute();
-
-            // Increment the global time
-            com.asu.scheduler.model.GlobalStopWatch.incrementTime();
-
-            if (processes.size() == 0 && processor.state == Processor.ProcessorState.IDLE) {
-                // System.out.println(ganntChart.toString());
-                // System.out.println("\nAll processes have been terminated");
-                break;
-                // System.exit(0);
-            } else {
-                // ganntChart.append(processor.getCurrentProcess() == null ? "I" : "P(" + processor.getCurrentProcess().getPID() + ") ");
-                if (processor.getCurrentProcess().color == null) {
-                    processor.getCurrentProcess().color = Color.rgb(
-                            (int) (Math.random() * 256),
-                            (int) (Math.random() * 256),
-                            (int) (Math.random() * 256)
-                    );
-                }
-
-                ganttChartProcesses.add(processor.getCurrentProcess());
-            }
-        }
-
-        // Debugging
-        // for (Process process : ganttChartProcesses) {
-        //     System.out.print(process.getPID() + " -> ");
-        // }
+        simulate();
 
         // Initialize the Gantt Chart Scene
         initGanttChartScene();
