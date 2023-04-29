@@ -1,5 +1,0 @@
--real time gantt chart with updated-remainingBurstTime table
--calculating avg turnaround time and avg waiting time + display on gui
--implement priority non-preemptive
--create exe 
--pdf report

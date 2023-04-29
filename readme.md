@@ -7,7 +7,8 @@ This is a processor scheduler that simulates the following scheduling algorithms
 * First Come First Serve (FCFS)
 * Shortest Job First (SJF) Non-Preemptive
 * Shortest Job First (SJF) Preemptive
-* Priority
+* Priority Non-Preemptive
+* Priority Preemptive
 * Round Robin (RR)
 
 It is written in Java 17 and JavaFX 17.0.1 is used for the GUI.
