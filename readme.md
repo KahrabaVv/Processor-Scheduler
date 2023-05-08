@@ -13,6 +13,9 @@ This is a processor scheduler that simulates the following scheduling algorithms
 
 It is written in Java 17 and JavaFX 17.0.1 is used for the GUI.
 
+## Sample Video
+https://user-images.githubusercontent.com/104012796/236830222-0a75cde3-2db9-490f-b46d-855b301e64bf.mp4
+
 ## GUI
 The GUI is built using JavaFX.
 
